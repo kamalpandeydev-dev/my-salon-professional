@@ -45,7 +45,12 @@
   --shadow-soft: 0 8px 30px -12px color-mix(in oklab, var(--rose) 35%, transparent);
   --shadow-gold: 0 12px 40px -12px color-mix(in oklab, var(--gold) 45%, transparent);
 
-  --gradient-hero: linear-gradient(135deg, oklch(0.97 0.025 25) 0%, oklch(0.93 0.04 20) 50%, oklch(0.88 0.06 35) 100%);
+  --gradient-hero: linear-gradient(
+    135deg,
+    oklch(0.97 0.025 25) 0%,
+    oklch(0.93 0.04 20) 50%,
+    oklch(0.88 0.06 35) 100%
+  );
   --gradient-gold: linear-gradient(135deg, oklch(0.78 0.13 75) 0%, oklch(0.68 0.15 60) 100%);
   --gradient-blush: linear-gradient(135deg, oklch(0.95 0.035 20) 0%, oklch(0.88 0.07 25) 100%);
 }
@@ -54,23 +59,23 @@
   --radius: 0.875rem;
 
   /* Brand */
-  --background: oklch(0.99 0.005 60);          /* warm white */
-  --foreground: oklch(0.22 0.03 25);           /* deep mahogany */
+  --background: oklch(0.99 0.005 60); /* warm white */
+  --foreground: oklch(0.22 0.03 25); /* deep mahogany */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.22 0.03 25);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.22 0.03 25);
 
-  --primary: oklch(0.55 0.13 18);              /* rose */
+  --primary: oklch(0.55 0.13 18); /* rose */
   --primary-foreground: oklch(0.99 0.005 60);
 
-  --secondary: oklch(0.94 0.03 25);            /* blush */
+  --secondary: oklch(0.94 0.03 25); /* blush */
   --secondary-foreground: oklch(0.3 0.05 25);
 
   --muted: oklch(0.96 0.015 60);
   --muted-foreground: oklch(0.48 0.03 25);
 
-  --accent: oklch(0.78 0.13 75);               /* gold */
+  --accent: oklch(0.78 0.13 75); /* gold */
   --accent-foreground: oklch(0.22 0.03 25);
 
   --destructive: oklch(0.58 0.22 25);
@@ -87,15 +92,26 @@
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4, .font-display { font-family: var(--font-display); letter-spacing: -0.01em; }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
 }
 
 @layer utilities {
@@ -105,11 +121,21 @@
     background-clip: text;
     color: transparent;
   }
-  .bg-gradient-hero { background: var(--gradient-hero); }
-  .bg-gradient-gold { background: var(--gradient-gold); }
-  .bg-gradient-blush { background: var(--gradient-blush); }
-  .shadow-soft { box-shadow: var(--shadow-soft); }
-  .shadow-gold { box-shadow: var(--shadow-gold); }
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  .bg-gradient-gold {
+    background: var(--gradient-gold);
+  }
+  .bg-gradient-blush {
+    background: var(--gradient-blush);
+  }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
   .gold-divider {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
@@ -117,13 +143,79 @@
 }
 
 @keyframes float-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.animate-float-in { animation: float-in 0.7s ease-out both; }
+.animate-float-in {
+  animation: float-in 0.7s ease-out both;
+}
 
 @keyframes shimmer {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
-.animate-shimmer { animation: shimmer 3s ease-in-out infinite; }
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+/* ==========================================================================
+   HERO LAYERED BACKGROUND SYSTEM (IMAGE + VIDEO + TINT)
+   ========================================================================== */
+
+.salon-hero-section {
+  background-color: #fff5f0; 
+}
+
+.salon-hero-video-wrapper {
+  z-index: 0;
+  pointer-events: none; /* Keeps all text content selectable over backgrounds */
+}
+
+/* Layer 1: Static Image Control */
+.salon-static-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(95%) contrast(92%); 
+}
+
+/* Layer 2: Video Transparency Control */
+.salon-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* 🎛️ Adjust this number (0.0 to 1.0) to control how much static image peeks through */
+  opacity: 0.6; 
+  filter: saturate(65%) contrast(90%) brightness(110%);
+  /* 🔄 ADD THIS LINE TO FLIP HORIZONTALLY */
+  transform: scaleX(-1);
+}
+
+/* Layer 3: Overall Brightness Mask Cover */
+.salon-video-overlay {
+  /* 🎛️ Adjust 0.65 to shift global brightness levels on text content spaces */
+  background: rgba(255, 245, 240, 0.65);
+  
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 245, 240, 0.60) 20%,
+    rgba(255, 245, 240, 0.75) 70%,
+    rgba(255, 245, 240, 1) 100%
+  );
+}
+
+/* Secure content text containers stay anchored safely on top layer */
+.salon-hero-section > div.relative {
+  z-index: 2;
+}

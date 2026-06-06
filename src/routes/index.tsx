@@ -16,6 +16,7 @@ import nailsImg from "@/assets/nails.jpg";
 import hairImg from "@/assets/hair.jpg";
 import facialImg from "@/assets/facial.jpg";
 import makeupImg from "@/assets/makeup.jpg";
+import bridalVideo from "@/assets/video-bg-compressed.mp4";
 import { popularServices } from "@/lib/services";
 import { ServiceCard } from "@/components/ServiceCard";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -95,12 +96,32 @@ function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-hero" />
-        <div
-          className="absolute inset-0 opacity-40 pointer-events-none"
-          style={{ background: "radial-gradient(circle at 85% 30%, var(--gold), transparent 45%)" }}
-        />
+      <section className="relative overflow-hidden salon-hero-section">
+        {/* 🎥 Background Layers Stack */}
+        <div className="absolute inset-0 salon-hero-video-wrapper">
+          {/* LAYER 1: Static interior fallback image sitting behind the video */}
+          <div
+            className="absolute inset-0 salon-static-bg"
+            style={{ backgroundImage: `url(${heroImg})` }}
+          />
+
+          {/* LAYER 2: Moving abstract pattern video backdrop */}
+          <video
+            autoPlay
+            loop={true}
+            muted
+            playsInline
+            poster={heroImg} // Uses your heroImg as a structural element while downloading
+            className="w-full h-full object-cover salon-bg-video"
+          >
+            <source src={bridalVideo} type="video/mp4" />
+          </video>
+
+          {/* LAYER 3: The peach color wash overlay that sets combined transparency */}
+          <div className="absolute inset-0 salon-video-overlay" />
+        </div>
+
+        {/* Keeping your exact content structural layout and dynamic data intact */}
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 lg:pt-20 pb-20 lg:pb-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-float-in">
@@ -168,7 +189,6 @@ function Home() {
           </div>
         </div>
       </section>
-
       {/* QUICK HIGHLIGHTS */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">

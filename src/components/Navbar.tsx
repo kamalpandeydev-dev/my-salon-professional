@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { business, telLink } from "@/lib/business";
-
+import logoImg from "@/assets/msp-logo2.png";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
@@ -35,9 +35,11 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 lg:h-20 items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="text-2xl lg:text-3xl font-display font-semibold tracking-tight">
-              My Salon <span className="text-gradient-gold">Professional</span>
-            </span>
+            <img
+              src={logoImg} // Change this to your actual logo asset path
+              alt="My Salon Professional Logo"
+              className="w-full max-w-[140px] md:max-w-[200px] transition-transform group-hover:scale-[1.02]"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8">
